@@ -1,0 +1,61 @@
+.mainProducts {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    margin: 3% 0% 3% 0%;
+
+    h1 {
+        font-family: $tipografia;
+        font-weight: 200;
+    }
+
+    .mainProductsCards {
+        font-family: $tipografia;
+
+        .card {
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            .card-body {
+                h5 {
+                    font-size: 120%;
+                }
+    
+                .price {
+                    font-size: 120%;
+                    color: $color3;
+                }
+    
+                .stock {
+                    color: $color3;
+                }
+    
+                p {
+                    margin: 10% 0% 10% 0%;
+                }
+    
+                .btn {
+                    font-size: 90%;
+                    background-color: $color3;
+                    border: none;
+                    
+                    &:focus {
+                        box-shadow: none;
+                    }
+    
+                    &:valid {
+                        border-color: black;
+                        background-color: $color3;
+                    }
+                }
+    
+                .btn-primary {
+                    &:hover {
+                        background-color: $color2;
+                    }
+                }
+            }
+        }
+    }
+}

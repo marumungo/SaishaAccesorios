@@ -1,0 +1,48 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    <div class="mainAddDocuments">
+        <h1>AÑADIR DOCUMENTOS</h1>
+
+        {{#if user}}
+            {{#if missingDocuments}}
+                <p class="formInfo">DEBE SELECCIONAR UN ARCHIVO!!</p>
+            {{/if}}
+
+            {{#if documentNameUndefined}}
+                <p class="formInfo">LOS DOCUMENTOS DEBEN LLAMARSE:</p>
+                <p class="formInfo">- identificacion</p>
+                <p class="formInfo">- comprobanteDomicilio</p>
+                <p class="formInfo">- comprobanteEstadoCuenta</p>
+            {{/if}}
+
+            {{#if documentPushed}}
+                <p class="formInfo">DOCUMENTO SUBIDO EXITOSAMENTE!!</p>
+            {{/if}}
+
+            <form action="/api/users/{{user._doc._id}}/documents" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="profileImage" class="form-label">Imagen de perfil:</label>
+                    <input type="file" name="profileImage" class="form-control" id="exampleInputEmail1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="productImage" class="form-label">Imagen de producto:</label>
+                    <input type="file" name="productImage" class="form-control" id="exampleInputEmail1">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="document" class="form-label">Documentos:</label>
+                    <input type="file" name="document" multiple class="form-control" id="exampleInputEmail1">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Subir Archivos</button>
+            </form>
+
+            <a href="/api/users/{{user._doc._id}}">Volver al usuario</a>
+        {{/if}}
+    </div>
+</main>

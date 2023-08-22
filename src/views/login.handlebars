@@ -1,0 +1,31 @@
+<header>
+    {{> header}}
+    {{> loginHeader}}
+</header>
+
+<main>
+    <div class="mainLogin">
+        <h1>INICIAR SESIÓN</h1>
+
+        {{#if missingInfo}}
+            <p class="formInfo">LOS DATOS SON INCORRECTOS!!</p>
+        {{/if}}
+
+        <form id="cookieForm" action="/api/sessions/login" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                <div id="emailHelp" class="form-text">El mismo que utilizaste para registrarte</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+
+        <p>No tengo usuario <a href="/api/sessions/register">Registrarse</a></p>
+        <p>Olvide mi contraseña <a href="/api/sessions/forgotPassword">Restablecer</a></p>
+        <a href="/api/sessions/github">Entrar con GitHub</a>
+    </div>
+</main>

@@ -1,0 +1,163 @@
+paths: 
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+    post:
+      summary: Crea un nuevo producto
+      tags: 
+        - Products
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "201":
+          description: El producto fue creado correctamente
+  /api/products/{id}:
+    get:
+      summary: Obtiene un producto por su id
+      tags: 
+        - Products
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: El id del producto a solicitar
+        schema:
+          $type: String  
+      responses:
+        "200":
+          description: El producto fue obtenido correctamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Product'
+    put:
+      summary: Se actualiza un producto por su id
+      tags:
+        - Products
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: El id del producto a actualizar
+        schema: 
+          type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+    delete:
+      summary: Se elimina un producto por su id
+      tags: 
+        - Products
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: El id del producto a eliminar
+        schema:
+          $type: String  
+      responses:
+        "200":
+          description: El producto fue eliminado correctamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Product'  
+components:
+  schemas: 
+    Product: 
+      type: object
+      properties: 
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        title:
+          type: string
+          description: El título del producto
+        description:
+          type: string
+          description: La descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+        category:
+          type: string
+          description: La categoría del producto
+        stock:
+          type: number
+          description: El stock disponible del producto
+        code:
+          type: number
+          description: El código único del producto
+        imageUrl:
+          type: string
+          description: La imagen del producto
+        owner:
+          type: number
+          description: El creador del producto
+      example:
+        _id: ObjectId('fasldkf56asdf.asdfa6a54s')
+        title: Zapato taco alto
+        description: Ideal para ocasiones formales
+        price: 6700
+        category: Zapatos
+        stock: 39
+        code: 705
+        imageUrl: zapatoImagen.com
+        owner: marumungo@gmail.com
+  requestBodies: 
+    updateProduct:
+      type: object
+      properties: 
+        title:
+          type: string
+          description: El título del producto
+        description:
+          type: string
+          description: La descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+        category:
+          type: string
+          description: La categoría del producto
+        stock:
+          type: number
+          description: El stock disponible del producto
+        code:
+          type: number
+          description: El código único del producto
+        imageUrl:
+          type: string
+          description: La imagen del producto
+        owner:
+          type: number
+          description: El creador del producto
+      example:
+        title: Zapato taco alto
+        description: Ideal para ocasiones formales
+        price: 6700
+        category: Zapatos
+        stock: 39
+        code: 705
+        imageUrl: zapatoImagen.com
+        owner: marumungo@gmail.com

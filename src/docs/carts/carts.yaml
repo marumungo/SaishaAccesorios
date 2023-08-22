@@ -1,0 +1,246 @@
+paths: 
+  /api/carts/:
+    get:
+      summary: Obtiene todos los carritos
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: Los carritos fueron obtenidos correctamente
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#components/schemas/Cart'
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+    post:
+      summary: Crea un nuevo carrito
+      tags: 
+        - Carts
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/updateCart'
+      responses:
+        "201":
+          description: El carrito fue creado correctamente
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito por su cid
+      tags: 
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a solicitar
+        schema:
+          $type: String  
+      responses:
+        "200":
+          description: El carrito fue obtenido correctamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Cart'
+    put:
+      summary: Se actualiza un carrito por su cid
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a actualizar
+        schema: 
+          type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateCart'
+    delete:
+      summary: Se elimina un carrito en base a un cid
+      tags: 
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a eliminar
+        schema:
+          $type: String  
+      responses:
+        "200":
+          description: El carrito fue eliminado correctamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Cart'  
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agrega un producto por su pid, en un carrito por su cid
+      tags: 
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a solicitar
+        schema:
+          $type: String
+      - name: pid
+        in: path
+        required: true
+        description: El pid del producto a agregar
+        schema:
+          $type: String  
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/updateCart'
+    put:
+      summary: Se actualiza la cantidad de un producto por su pid, dentro de un carrito por su cid
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a solicitar
+        schema:
+          $type: String
+      - name: pid
+        in: path
+        required: true
+        description: El pid del producto a actualizar su cantidad
+        schema:
+          $type: String  
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/updateCart'
+    delete:
+      summary: Se elimina un producto por su pid, dentro de un carrito por su cid
+      tags: 
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a solicitar
+        schema:
+          $type: String
+      - name: pid
+        in: path
+        required: true
+        description: El pid del producto a eliminar
+        schema:
+          $type: String  
+      responses:
+        "200":
+          description: El carrito fue eliminado correctamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Cart'
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Agrega un ticket de un carrito por su cid
+      tags: 
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: El cid del carrito a solicitar
+        schema:
+          $type: String  
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/updateTicket'
+components:
+  schemas: 
+    Cart: 
+      type: object
+      properties: 
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        products:
+          type: array
+          description: Array que almacena los productos con su cantidad y su id
+      example:
+        _id: ObjectId('64c1d740f67444522ad790a4')
+        products: [{
+          product: ObjectId('fasldkf56asdf.asdfa6a54s'),
+          quantity: 2
+        }]
+    Ticket:
+      type: object
+      properties:
+        _id: 
+          type: string
+          description: Id autogenerado por Mongo
+        code:
+          type: string
+          description: El código único del ticket
+        purchase_datatime:
+          type: string
+          description: Fecha en la que se genera el ticket de compra
+        amount:
+          type: number
+          description: Monto total de la compra realizada
+        purchaser:
+          type: string
+          description: Email del comprador
+      example:
+        _id: ObjectId('64c1d740f67444522ad790a4')
+        code: 456
+        purchase_datatime: 14:08 17/08/23 
+        amount: 10658
+        purchaser: marumungo@gmail.com
+  requestBodies: 
+    updateCart:
+      type: object
+      properties: 
+        products:
+          type: array
+          description: Array que almacena los productos con su cantidad y su id
+      example:
+        products: [{
+          product: ObjectId('fasldkf56asdf.asdfa6a54s'),
+          quantity: 2
+        }]
+    updateTicket:
+      type: object
+      properties:
+        code:
+          type: string
+          description: El código único del ticket
+        purchase_datatime:
+          type: string
+          description: Fecha en la que se genera el ticket de compra
+        amount:
+          type: number
+          description: Monto total de la compra realizada
+        purchaser:
+          type: string
+          description: Email del comprador
+      example:
+        code: 456
+        purchase_datatime: 14:08 17/08/23 
+        amount: 10658
+        purchaser: marumungo@gmail.com

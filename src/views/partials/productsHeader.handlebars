@@ -1,0 +1,43 @@
+<div class="headerLogoDiv">
+    <img class="headerLogo" src="/static/images/logo.jpg" alt="logo">
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/products">PRODUCTOS</a>
+                    </li>
+
+                    {{#if cart}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/api/carts/{{cart._doc._id}}">CARRITO</a>
+                        </li>
+                    {{/if}}
+
+                    {{#if user}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MI CUENTA
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/api/users/{{user._doc._id}}">VER MI USUARIO</a></li>
+                                <li><a class="dropdown-item" href="/api/sessions/logout">CERRAR SESIÓN</a></li>
+                            </ul>
+                        </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {{#if user}}
+        <div class="headerUser">
+            <p>BIENVENIDO/A</p>
+            <a href="/api/users/{{user._doc._id}}" class="headerUserName"><strong>{{user._doc.first_name}} {{user._doc.last_name}}</strong></a>
+        </div>
+    {{/if}}
+</div>

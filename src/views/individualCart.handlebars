@@ -1,0 +1,57 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    {{#if user}}
+        <div class="mainCart">
+            <h1>MI CARRITO</h1>
+
+            {{#if cart}}
+                {{#if noCartProducts}}
+                    <p>No hay productos todavia!</p>
+                {{/if}}
+                {{#if cartProducts}}
+                    {{#each cartProducts}}
+                        <div class="mainCartProducts">
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{this._doc.product._doc.imageUrl}}" class="card-img-top" alt="productImage">
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>{{this._doc.product._doc.title}}</strong></h5>
+                                    <p class="card-text description">{{this._doc.product._doc.description}}</p>
+                                    <p class="card-text description">Cantidad: <strong>{{this._doc.quantity}}</strong></p>
+                                    <p class="card-text price"><strong>${{this._doc.product._doc.price}}</strong></p>
+                                    <a href="/api/carts/{{../cart._doc._id}}/product/{{this._doc.product._doc._id}}" class="btn btn-danger btn-delete">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                {{/if}}
+            {{/if}}
+        </div>
+    {{/if}}
+</main>
+
+<script>
+    document.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('btn-delete')) {
+            event.preventDefault();
+            const url = event.target.getAttribute('href');
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    // Actualizar la página o realizar cualquier otra acción después de eliminar
+                    location.reload();
+                } else {
+                    console.error(data.error);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+</script>

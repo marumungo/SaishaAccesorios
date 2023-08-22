@@ -1,0 +1,39 @@
+.mainUsers {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    margin: 3% 0% 3% 0%;
+
+    h1 {
+        font-family: $tipografia;
+        font-weight: 200;
+    }
+
+    .mainUsersCards {
+        font-family: $tipografia;
+
+        .card {
+            width: 100%;
+            margin: 10% 0% 0% 0%;
+
+            .card-body {
+                h5 {
+                    font-size: 120%;
+                    margin-top: 3%;
+                    color: $color3;
+                    font-weight: 600;
+                }
+    
+                p {
+                    margin: 10% 0% 5% 0%;
+                }
+            }
+        }
+    }
+
+    .formInfo {
+        color: $color3;
+        font-weight: 600;
+        margin-top: 5%;
+    }
+}

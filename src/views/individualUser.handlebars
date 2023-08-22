@@ -1,0 +1,89 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    {{#if user}}
+        <div class="mainUser">
+            <h1>MI CUENTA</h1>
+
+            <h2>Estos son los datos con los que se registró tu usuario</h2>
+
+            <div>
+                <p><strong>Usuario:</strong> {{user._doc.username}}</p>
+                <p><strong>Nombre:</strong> {{user._doc.first_name}} {{user._doc.last_name}}</p>
+                <p><strong>Email:</strong> {{user._doc.email}}</p>
+                <p><strong>Rol:</strong> {{user._doc.role}}</p>
+                <p><strong>Género:</strong> {{user._doc.gender}}</p>
+                <p><strong>Última vez conectado:</strong> {{user._doc.last_connection}}</p>
+                <p><a href="/api/users/{{user._doc._id}}/documents" class="btn btn-primary">SUBIR DOCUMENTOS</a></p>
+            </div>
+
+            <a href="/api/sessions/logout">Cerrar sesión</a>
+        </div>
+
+        {{#if isAdmin}}
+            <div class="mainUser">
+                <h1>ACCIONES DE ADMIN</h1>
+
+                <p>Si desea crear un producto. <a href="/api/products/addProduct">Ingrese aquí</a></p>
+                <p>Si desea ver todos los usuarios. <a href="/api/users">Ingrese aquí</a></p>
+            </div>
+        {{/if}}
+
+        {{#if isUserOrPremium}}
+            <div class="mainUser">
+                <h1>ACCIONES DE {{user._doc.role}}</h1>
+
+                {{#if missingDocuments}}
+                    <div>
+                        <p class="formInfo">PARA EL CAMBIO DE ROL TE FALTA SUBIR:</p>
+                        {{#if missingIdentificacion}}
+                            <p class="formInfo">- IDENTIFICACIÓN</p>
+                        {{/if}}
+
+                        {{#if missingComprobanteDomicilio}}
+                            <p class="formInfo">- COMPROBANTE DE DOMICILIO</p>
+                        {{/if}}
+
+                        {{#if missingComprobanteEstado}}
+                            <p class="formInfo">- COMPROBANTE DE ESTADO DE CUENTA</p>
+                        {{/if}}
+                    </div>
+                {{/if}}
+
+                {{#if allDocuments}}
+                    <p class="formInfo">FELICIDADES, YA PODES CAMBIAR TU ROL A PREMIUM!!</p>
+                {{/if}}
+
+                <p>Si desea cambiar su rol. <a href="#" id="premiumLink" data-user-id="{{user._doc._id}}">Ingrese aquí</a></p>
+            </div>
+        {{/if}}
+    {{/if}}
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const premiumLink = document.getElementById("premiumLink");
+
+        premiumLink.addEventListener("click", async (event) => {
+            event.preventDefault();
+            
+            const userId = premiumLink.getAttribute("data-user-id");
+            const url = `/api/users/premium/${userId}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "PUT"
+                });
+
+                setTimeout(() => {
+                    window.location.href = `/api/users/${userId}`;
+                }, 1);
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    });
+</script>

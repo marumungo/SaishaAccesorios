@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Zapatos",
+    "description": "Con taco alto",
+    "price": 3500,
+    "category": "Calzados",
+    "thumbail": [
+      "imagen1.com"
+    ],
+    "code": 253,
+    "stock": 45,
+    "id": 1
+  },
+  {
+    "title": "Pollera",
+    "description": "Con volados",
+    "price": 2600,
+    "category": "Partes de abajo",
+    "thumbail": [
+      "imagen2.com"
+    ],
+    "code": 178,
+    "stock": 28,
+    "id": 2
+  },
+  {
+    "title": "Jean",
+    "description": "De color azul",
+    "price": 2410,
+    "category": "Partes de abajo",
+    "thumbail": [
+      "imagen3.com"
+    ],
+    "code": 345,
+    "stock": 12,
+    "id": 3
+  },
+  {
+    "title": "Remera",
+    "description": "Escote en v",
+    "price": 1700,
+    "category": "Partes de arriba",
+    "thumbail": [
+      "imagen4.com"
+    ],
+    "code": 56,
+    "stock": 39,
+    "id": 4
+  },
+  {
+    "title": "Blusa",
+    "description": "Con cuello alto",
+    "price": 3100,
+    "category": "Partes de arriba",
+    "thumbail": [
+      "imagen5.com"
+    ],
+    "code": 124,
+    "stock": 24,
+    "id": 5
+  },
+  {
+    "title": "Pantalón cargo",
+    "description": "Tiro alto",
+    "price": 4280,
+    "category": "Partes de abajo",
+    "thumbail": [
+      "imagen6.com"
+    ],
+    "code": 176,
+    "stock": 53,
+    "id": 6
+  },
+  {
+    "title": "Saco",
+    "description": "Abrigado de color beige",
+    "price": 7240,
+    "category": "Abrigos",
+    "thumbail": [
+      "imagen7.com"
+    ],
+    "code": 67,
+    "stock": 26,
+    "id": 7
+  },
+  {
+    "title": "Sandalias",
+    "description": "Abiertas con cierre",
+    "price": 3520,
+    "category": "Calzados",
+    "thumbail": [
+      "imagen8.com"
+    ],
+    "code": 89,
+    "stock": 62,
+    "id": 8
+  },
+  {
+    "title": "Corset",
+    "description": "Sin tirantes",
+    "price": 5470,
+    "category": "Partes de arriba",
+    "thumbail": [
+      "imagen9.com"
+    ],
+    "code": 53,
+    "stock": 19,
+    "id": 9
+  },
+  {
+    "title": "Top",
+    "description": "Escote corazón",
+    "price": 1390,
+    "category": "Partes de arriba",
+    "thumbail": [
+      "imagen10.com"
+    ],
+    "code": 25,
+    "stock": 36,
+    "id": 10
+  }
+]

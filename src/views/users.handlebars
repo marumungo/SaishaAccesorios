@@ -1,0 +1,28 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    {{#if user}}
+        <div class="mainUsers">
+            <h1>USUARIOS</h1>
+
+            {{#each users}}
+                <div class="mainUsersCards">
+                    <div class="card" style="width: 47rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this._doc.username}}</h5>
+                            <p class="card-text"><strong>Nombre: </strong>{{this._doc.first_name}}</p>
+                            <p class="card-text"><strong>Apellido: </strong>{{this._doc.last_name}}</p>
+                            <p class="card-text"><strong>Email: </strong>{{this._doc.email}}</p>
+                            <p class="card-text"><strong>Género: </strong>{{this._doc.gender}}</p>
+                            <p class="card-text"><strong>Rol: </strong>{{this._doc.role}}</p>
+                            <p class="card-text"><strong>Última vez conectado: </strong>{{this._doc.last_connection}}</p>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+</main>

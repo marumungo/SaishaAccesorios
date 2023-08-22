@@ -1,0 +1,16 @@
+p {
+    padding: 2% 0% 2% 0%;
+    display: flex;
+    justify-content: center;
+    font-family: $tipografia;
+    background-color: $color3;
+    color: $color0;
+}
+
+.footerSaisha {
+    margin: 0% 0.5% 0% 0.5%;
+
+    &:hover {
+        color: $color2;
+    }
+}

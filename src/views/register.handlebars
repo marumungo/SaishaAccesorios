@@ -1,0 +1,65 @@
+<header>
+    {{> header}}
+    {{> loginHeader}}
+</header>
+
+<main>
+    <div class="mainRegister">
+        <h1>REGISTRARSE</h1>
+
+        {{#if missingInfo}}
+            <p class="formInfo">LOS CAMPOS SON OBLIGATORIOS!!</p>
+        {{/if}}
+
+        {{#if userCreated}}
+            <p class="formInfo">USUARIO CREADO EXITOSAMENTE!!</p>
+        {{/if}}
+
+        <form action="/api/sessions/register" method="POST">
+                {{#if existingInfoUsername}}
+                    <p class="formInfo1">ESE USUARIO YA EXISTE!!</p>
+                {{/if}}
+
+                <div class="mb-3">
+                    <label for="exampleInputUsername1" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputUsername1" aria-describedby="emailHelp">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Nombre</label>
+                    <input type="text" name="first_name" class="form-control" id="exampleInputName1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputLastName1" class="form-label">Apellido</label>
+                    <input type="text" name="last_name" class="form-control" id="exampleInputLastName1">
+                </div>
+                
+                {{#if existingInfoEmail}}
+                    <p class="formInfo1">ESE EMAIL YA EXISTE!!</p>
+                {{/if}}
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputGender1" class="form-label">Género</label>
+                    <select class="form-select" aria-label="Default select example" name="gender" id="exampleInputGender1">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+
+        <p>Ya tengo usuario <a href="/api/sessions/login">Iniciar sesión</a></p>
+    </div>
+</main>

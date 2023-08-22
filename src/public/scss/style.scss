@@ -1,0 +1,73 @@
+// LLamo los distintos styles
+@import "../utilities/coloresYTipografias";
+@import "../utilities/reseteo";
+
+header {
+    @import "../layout/header";
+}
+
+main {
+    width: 100%;
+    
+    @import "../layout/mainForgotPassword";
+    @import "../layout/mainIndividualProduct";
+    @import "../layout/mainIndividualCart";
+    @import "../layout/mainIndividualUser";
+    @import "../layout/mainLogin";
+    @import "../layout/mainProducts";
+    @import "../layout/mainAddProduct";
+    @import "../layout/mainUsers";
+    @import "../layout/mainRegister";
+    @import "../layout/mainResetPassword";
+    @import "../layout/mainDocuments";
+    @import "../layout/main404NotFound";
+}
+
+footer {
+    @import "../layout/footer";
+}
+
+.swal2-popup {
+    font-family: $tipografia !important;
+    width: 30% !important;
+    max-width: none;
+
+    .swal2-success-ring {
+        border-color: $color3 !important;
+    }
+    
+    .swal2-success-line-tip {
+        background-color: $color3 !important;
+    }
+    
+    .swal2-success-line-long{
+        background-color: $color3 !important;
+    }
+    
+    .swal2-title {
+        font-size: 3rem;
+        color: $color3;
+    }
+    
+    .swal2-html-container {
+        font-size: 1.8rem;
+        line-height: 2.8rem;
+    
+        strong {
+        color: $color1;
+        }
+    }
+    
+    .swal2-confirm {
+        font-size: 1.7rem !important;
+        background-color: $color3 !important;
+    
+        &:hover {
+        background-color: $color2 !important;
+        }
+    
+        &:focus {
+        box-shadow: none !important;
+        }
+    }
+}

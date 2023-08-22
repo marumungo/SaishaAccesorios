@@ -1,0 +1,927 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap");
+* {
+  font-weight: 400;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  position: relative;
+  min-width: 100%;
+  font-size: 62.5%;
+  box-sizing: border-box;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: white;
+  font-size: 16px;
+  font-size: 1.6rem;
+  letter-spacing: 0.3px;
+  height: 100%;
+}
+
+header .header {
+  margin: 0%;
+  padding: 0.5% 0% 0.5% 0%;
+  background-color: #7D9D9C;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+header .headerLogoDiv {
+  padding: 1% 2% 1% 1%;
+  background-color: #F0EBE3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .headerLogoDiv .headerLogo {
+  width: 8%;
+}
+
+header .headerLogoDiv .navbar {
+  display: flex;
+  justify-items: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+header .headerLogoDiv .navbar .nav-link {
+  padding-right: 3rem;
+  padding-left: 3rem;
+  font-size: 110%;
+}
+
+header .headerLogoDiv .navbar .nav-link:hover {
+  color: #7D9D9C;
+}
+
+header .headerLogoDiv .navbar .dropdown-menu {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  font-size: 80%;
+}
+
+header .headerLogoDiv .bg-body-tertiary {
+  background-color: #F0EBE3 !important;
+}
+
+header .headerLogoDiv .headerUser {
+  text-align: right;
+  font-family: "Montserrat", sans-serif;
+}
+
+header .headerLogoDiv .headerUser .headerUserName {
+  text-decoration: none;
+  color: black !important;
+}
+
+header .headerLogoDiv .headerUser .headerUserName:hover {
+  color: #7D9D9C !important;
+}
+
+main {
+  width: 100%;
+}
+
+main .mainForgotPassword {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainForgotPassword h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  margin-bottom: 7%;
+}
+
+main .mainForgotPassword form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 10% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainForgotPassword form .mb-3 {
+  padding: 0% 0% 5% 0%;
+}
+
+main .mainForgotPassword form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainForgotPassword form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainForgotPassword form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainForgotPassword form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainForgotPassword form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainForgotPassword form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainForgotPassword form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainForgotPassword p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainForgotPassword a {
+  color: #7D9D9C;
+}
+
+main .mainForgotPassword a:hover {
+  color: #E4DCCF;
+}
+
+main .mainForgotPassword .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainProduct {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainProduct h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainProduct img {
+  margin-top: 10%;
+}
+
+main .mainProduct p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 130%;
+  margin: 8% 0% 8% 0%;
+}
+
+main .mainProduct .price {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-bottom: 17%;
+}
+
+main .mainProduct .btn {
+  font-size: 110%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainProduct .btn:focus {
+  box-shadow: none;
+}
+
+main .mainProduct .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainProduct .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainCart {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainCart h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainCart .mainCartProducts {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 10%;
+}
+
+main .mainCart .mainCartProducts .card .card-body h5 {
+  font-size: 120%;
+}
+
+main .mainCart .mainCartProducts .card .card-body .price {
+  font-size: 120%;
+  color: #7D9D9C;
+}
+
+main .mainCart .mainCartProducts .card .card-body p {
+  margin: 10% 0% 10% 0%;
+}
+
+main .mainCart .mainCartProducts .card .card-body .btn {
+  font-size: 90%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainCart .mainCartProducts .card .card-body .btn:focus {
+  box-shadow: none;
+}
+
+main .mainCart .mainCartProducts .card .card-body .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainCart .mainCartProducts .card .card-body .btn:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainUser {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainUser h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainUser h2 {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 5%;
+  font-size: 110%;
+  font-weight: 200;
+}
+
+main .mainUser p {
+  font-family: "Montserrat", sans-serif;
+  margin: 5% 0% 5% 0%;
+}
+
+main .mainUser strong {
+  font-size: 100%;
+  color: #7D9D9C;
+}
+
+main .mainUser a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 100%;
+  color: #7D9D9C;
+}
+
+main .mainUser a:hover {
+  color: #E4DCCF;
+}
+
+main .mainUser .btn {
+  color: white;
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainUser .btn:focus {
+  box-shadow: none;
+}
+
+main .mainUser .btn:valid {
+  color: white;
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainUser .btn-primary:hover {
+  color: white;
+  background-color: #E4DCCF;
+}
+
+main .mainUser .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainLogin {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainLogin h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainLogin form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 10% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainLogin form .mb-3 {
+  padding: 0% 0% 10% 0%;
+}
+
+main .mainLogin form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainLogin form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainLogin form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainLogin form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainLogin form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainLogin form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainLogin form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainLogin p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainLogin a {
+  color: #7D9D9C;
+}
+
+main .mainLogin a:hover {
+  color: #E4DCCF;
+}
+
+main .mainLogin .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin: 5% 0% 0% 0%;
+}
+
+main .mainProducts {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainProducts h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainProducts .mainProductsCards {
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainProducts .mainProductsCards .card:hover {
+  transform: scale(1.05);
+}
+
+main .mainProducts .mainProductsCards .card .card-body h5 {
+  font-size: 120%;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .price {
+  font-size: 120%;
+  color: #7D9D9C;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .stock {
+  color: #7D9D9C;
+}
+
+main .mainProducts .mainProductsCards .card .card-body p {
+  margin: 10% 0% 10% 0%;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .btn {
+  font-size: 90%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .btn:focus {
+  box-shadow: none;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainProducts .mainProductsCards .card .card-body .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainAddProduct {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainAddProduct h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainAddProduct form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 10% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainAddProduct form .mb-3 {
+  padding: 0% 0% 10% 0%;
+}
+
+main .mainAddProduct form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainAddProduct form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainAddProduct form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainAddProduct form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainAddProduct form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainAddProduct form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainAddProduct form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainAddProduct p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainAddProduct a {
+  color: #7D9D9C;
+}
+
+main .mainAddProduct a:hover {
+  color: #E4DCCF;
+}
+
+main .mainAddProduct .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainAddProduct .formInfo1 {
+  color: #7D9D9C;
+  font-weight: 600;
+}
+
+main .mainUsers {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainUsers h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainUsers .mainUsersCards {
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainUsers .mainUsersCards .card {
+  width: 100%;
+  margin: 10% 0% 0% 0%;
+}
+
+main .mainUsers .mainUsersCards .card .card-body h5 {
+  font-size: 120%;
+  margin-top: 3%;
+  color: #7D9D9C;
+  font-weight: 600;
+}
+
+main .mainUsers .mainUsersCards .card .card-body p {
+  margin: 10% 0% 5% 0%;
+}
+
+main .mainUsers .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainRegister {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainRegister h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainRegister form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 10% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainRegister form .mb-3 {
+  padding: 0% 0% 10% 0%;
+}
+
+main .mainRegister form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainRegister form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainRegister form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainRegister form .mb-3 .form-select {
+  font-size: 85%;
+}
+
+main .mainRegister form .mb-3 .form-select:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainRegister form .mb-3 .form-select:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainRegister form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainRegister form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainRegister form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainRegister form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainRegister p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainRegister a {
+  color: #7D9D9C;
+}
+
+main .mainRegister a:hover {
+  color: #E4DCCF;
+}
+
+main .mainRegister .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainRegister .formInfo1 {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 1%;
+}
+
+main .mainResetPassword {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainResetPassword h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  margin-bottom: 7%;
+}
+
+main .mainResetPassword form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 20% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainResetPassword form .mb-3 {
+  padding: 0% 0% 5% 0%;
+}
+
+main .mainResetPassword form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainResetPassword form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainResetPassword form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainResetPassword form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainResetPassword form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainResetPassword form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainResetPassword form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainResetPassword p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainResetPassword a {
+  color: #7D9D9C;
+}
+
+main .mainResetPassword a:hover {
+  color: #E4DCCF;
+}
+
+main .mainResetPassword .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainAddDocuments {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainAddDocuments h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainAddDocuments form {
+  width: 100%;
+  height: 100%;
+  margin: 10% 0% 10% 0%;
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainAddDocuments form .mb-3 {
+  padding: 0% 0% 10% 0%;
+}
+
+main .mainAddDocuments form .mb-3 .form-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 100%;
+}
+
+main .mainAddDocuments form .mb-3 .form-control {
+  font-size: 85%;
+}
+
+main .mainAddDocuments form .mb-3 .form-control:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+main .mainAddDocuments form .mb-3 .form-control:valid {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+main .mainAddDocuments form .btn {
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainAddDocuments form .btn:focus {
+  box-shadow: none;
+}
+
+main .mainAddDocuments form .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainAddDocuments form .btn-primary:hover {
+  background-color: #E4DCCF;
+}
+
+main .mainAddDocuments p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 90%;
+}
+
+main .mainAddDocuments a {
+  color: #7D9D9C;
+}
+
+main .mainAddDocuments a:hover {
+  color: #E4DCCF;
+}
+
+main .mainAddDocuments .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .main404NotFound {
+  display: grid;
+  flex-direction: column;
+  justify-items: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .main404NotFound h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  margin-bottom: 3%;
+  color: #7D9D9C;
+}
+
+main .main404NotFound a {
+  font-family: "Montserrat", sans-serif;
+  color: #7D9D9C;
+}
+
+main .main404NotFound a:hover {
+  color: #E4DCCF;
+}
+
+main .main404NotFound img {
+  margin-top: 3%;
+  width: 50%;
+}
+
+footer p {
+  padding: 2% 0% 2% 0%;
+  display: flex;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  background-color: #7D9D9C;
+  color: white;
+}
+
+footer .footerSaisha {
+  margin: 0% 0.5% 0% 0.5%;
+}
+
+footer .footerSaisha:hover {
+  color: #E4DCCF;
+}
+
+.swal2-popup {
+  font-family: "Montserrat", sans-serif !important;
+  width: 30% !important;
+  max-width: none;
+}
+
+.swal2-popup .swal2-success-ring {
+  border-color: #7D9D9C !important;
+}
+
+.swal2-popup .swal2-success-line-tip {
+  background-color: #7D9D9C !important;
+}
+
+.swal2-popup .swal2-success-line-long {
+  background-color: #7D9D9C !important;
+}
+
+.swal2-popup .swal2-title {
+  font-size: 3rem;
+  color: #7D9D9C;
+}
+
+.swal2-popup .swal2-html-container {
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.swal2-popup .swal2-html-container strong {
+  color: #F0EBE3;
+}
+
+.swal2-popup .swal2-confirm {
+  font-size: 1.7rem !important;
+  background-color: #7D9D9C !important;
+}
+
+.swal2-popup .swal2-confirm:hover {
+  background-color: #E4DCCF !important;
+}
+
+.swal2-popup .swal2-confirm:focus {
+  box-shadow: none !important;
+}

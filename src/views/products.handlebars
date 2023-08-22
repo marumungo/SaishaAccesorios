@@ -1,0 +1,26 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    {{#if user}}
+        <div class="mainProducts">
+            <h1>PRODUCTOS</h1>
+
+            {{#each products}}
+                <div class="mainProductsCards">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{this._doc.imageUrl}}" class="card-img-top" alt="productImage">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this._doc.title}}</h5>
+                            <p class="card-text price"><strong>${{this._doc.price}}</strong></p>
+                            <a href="/api/products/{{this._doc._id}}" class="btn btn-primary">VER MÁS</a>
+                            <p class="card-text">Quedan <strong class="stock">{{this._doc.stock}}</strong> disponibles!</p>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+</main>
