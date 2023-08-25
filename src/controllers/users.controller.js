@@ -3,6 +3,9 @@ const { userModel } = require("../dao/dataBase/models/user.model");
 const { upload } = require("../middlewares/multer");
 const { userService } = require("../service/index.service");
 const cartsController = require("./carts.controller");
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
 
 class UserController {
     getUsers = async (req, res) => {
@@ -223,17 +226,29 @@ class UserController {
             const cart = await cartsController.getCartByOwner(user._id);
 
             let newRole;
+            let missingDocuments = false;
             if (getUserById.role === "user") {
-                newRole = "premium";
+                // Verifico que esten todos los documentos antes de cambiar el rol a premium
+                const requiredDocumentNames = ["comprobantedomicilio", "comprobanteestadocuenta", "identificacion"];
+                const hasRequiredDocuments = requiredDocumentNames.every(name =>
+                    user.documents.some(doc => doc.name === name)
+                );
+
+                if (hasRequiredDocuments) {
+                    newRole = "premium";
+                } else {
+                    missingDocuments = true;
+                    return res.render("individualUser", {user, cart, isUserOrPremium: true});
+                }
             } else if (getUserById.role === "premium") {
                 newRole = "user";
             }
-
+            
             await userService.updateUserById(id, { role: newRole });
             
-            res.render("individualUser", {user, cart, isUserOrPremium: true});
+            return res.render("individualUser", {user, cart, isUserOrPremium: true});
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         };
     };
     
@@ -275,50 +290,71 @@ class UserController {
             ]);
 
             uploadMiddleware(req, res, async (err) => {
-                if (err) {
-                    return res.render("404NotFound", {});
-                }
-
-                const { profileImage, productImage, document } = req.files;
-                
                 let missingDocuments = false;
                 let documentPushed = false;
                 let documentNameUndefined = false;
+                let NOjpg = false;
+                let NOpdf = false;
 
+                const { profileImage, productImage, document } = req.files;
+                
                 if (!profileImage && !productImage && !document) {
                     missingDocuments = true;
                 }
 
-                // Actualiza el estado de los documentos en función de los archivos cargados
-                if (profileImage) {
-                    documentPushed = true;
-                    user.documents.push({ name: "profileImage", reference: profileImage[0].filename });
+                if (err) {
+                    missingDocuments = false;            
+                    if (err.message === ("Formato de imagen no admitido. Solo se permiten archivos JPG.")) {
+                        NOjpg = true;
+                    } else if(err.message === ("Formato de documento no admitido. Solo se permiten archivos PDF.")) {
+                        NOpdf = true;
+                    } else if (err.message === "Nombre de archivo no reconocido") {
+                        documentNameUndefined = true;
+                    }
                 }
 
-                if (productImage) {
+                // Función para verificar y numerar el nombre del archivo
+                const verifyAndNumerateFileName = (name) => {
+                    let newName = name;
+                    let counter = 1;
+                    while (user.documents.some(doc => doc.name === newName)) {
+                        newName = `${name}${counter}`;
+                        counter++;
+                    }
+                    return newName;
+                };
+
+                // Actualiza el estado de los documentos en función de los archivos cargados
+                if (profileImage) {
+                    const newName = verifyAndNumerateFileName("profileImage");
+                    user.documents.push({ name: newName, reference: `/uploads/profiles/${uid}/${newName}` });
                     documentPushed = true;
-                    user.documents.push({ name: "productImage", reference: productImage[0].filename });
+                }
+                
+                if (productImage) {
+                    const newName = verifyAndNumerateFileName("productImage");
+                    user.documents.push({ name: newName, reference: `/uploads/products/${uid}/${newName}` });
+                    documentPushed = true;
                 }
                 if (document) {
                     document.forEach((doc) => {
-                        const allowedDocumentNames = ["identificacion", "comprobantedomicilio", "comprobanteestadocuenta"];
-                        const documentName = doc.originalname.toLowerCase().replace(/\s/g, '');
-                        
-                        // Extraer el nombre del archivo sin la extensión
-                        const fileNameWithoutExtension = documentName.replace(/\.[^/.]+$/, "");
-
-                        if (allowedDocumentNames.includes(fileNameWithoutExtension)) {
-                            documentPushed = true;
-                            user.documents.push({ name: fileNameWithoutExtension, reference: doc.filename });
-                        } else {
-                            documentNameUndefined = true;
-                        }
-                    });
-                }
+                            const allowedDocumentNames = ["identificacion", "comprobantedomicilio", "comprobanteestadocuenta"];
+                            const documentName = doc.originalname.toLowerCase().replace(/\s/g, '');
+                            const fileNameWithoutExtension = documentName.replace(/\.[^/.]+$/, "");
+                            const newName = verifyAndNumerateFileName(fileNameWithoutExtension);
+                            
+                            if (allowedDocumentNames.includes(fileNameWithoutExtension)) {
+                                user.documents.push({ name: newName, reference: `/uploads/documents/${uid}/${newName}` });
+                                documentPushed = true;
+                            } else {
+                                documentNameUndefined = true;
+                            }
+                        });
+                };
 
                 await user.save();
 
-                return res.render("documents", { user, cart, missingDocuments, documentPushed, documentNameUndefined });
+                return res.render("documents", { user, cart, missingDocuments, documentPushed, documentNameUndefined, NOjpg, NOpdf });
             });
         } catch (error) {
             winstonLogger.error(error);

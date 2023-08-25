@@ -12,6 +12,14 @@
                 <p class="formInfo">DEBE SELECCIONAR UN ARCHIVO!!</p>
             {{/if}}
 
+            {{#if NOjpg}}
+                <p class="formInfo">LAS IMAGENES DEBEN SER FORMATO .JPG</p>
+            {{/if}}
+
+            {{#if NOpdf}}
+                <p class="formInfo">LOS DOCUMENTOS DEBEN SER FORMATO .PDF</p>
+            {{/if}}
+
             {{#if documentNameUndefined}}
                 <p class="formInfo">LOS DOCUMENTOS DEBEN LLAMARSE:</p>
                 <p class="formInfo">- identificacion</p>
@@ -39,7 +47,7 @@
                     <input type="file" name="document" multiple class="form-control" id="exampleInputEmail1">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Subir Archivos</button>
+                <button type="submit" class="btn btn-primary" data-user-id="{{user._doc._id}}">Subir Archivos</button>
             </form>
 
             <a href="/api/users/{{user._doc._id}}">Volver al usuario</a>
