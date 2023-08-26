@@ -1,7 +1,6 @@
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
-const { winstonLogger } = require("../config/loggers");
 
 // Configuración de Multer para guardar archivos en carpetas diferentes
 let userFolder;
@@ -61,7 +60,6 @@ const storage = multer.diskStorage({
         cb(null, fileName);
     }
 });
-
 
 const upload = multer({ storage });
 

@@ -55,6 +55,14 @@ class CartDaoDataBase {
         }
     }
 
+    async deleteCartById(cid) {
+        try {
+            return await cartModel.deleteOne({_id: cid});
+        } catch (error) {
+            return new Error(error);
+        }
+    }
+
     async deleteProductsCart(cid) {
         try {
             return await cartModel.findOneAndUpdate({_id: cid}, {$set: {products: {}}}, {new: true});

@@ -38,6 +38,11 @@ class CartRepository {
         return result;
     }
 
+    deleteCartById = async (cid) => {
+        let result = await this.dao.deleteCartById(cid);
+        return result;
+    }
+
     deleteProductsCart = async (cid) => {
         let result = await this.dao.deleteProductsCart(cid);
         return result;

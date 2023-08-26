@@ -2,6 +2,10 @@ const { v4: uuidv4 } = require('uuid');
 const { cartModel } = require("../dao/dataBase/models/cart.model");
 const { cartService, productService, ticketService, userService } = require("../service/index.service");
 const { winstonLogger } = require('../config/loggers');
+const ticketsController = require('./tickets.controller');
+
+require("dotenv").config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 class CartController {
     // GET que devuelve todos los carritos
@@ -37,15 +41,42 @@ class CartController {
             const cartProducts = cart.products;
             const username = req.session.user.username;
             const user = await userService.getUserByUsername(username);
+            
+            let noCartProducts = false;
+            let totalAmount;
+            if (!cartProducts) {
+                noCartProducts = true;
+            } else {
+                totalAmount = cartProducts.reduce((total, item) => {
+                    return total + (item.product && item.product.price ? item.product.price : 0) * item.quantity;
+                }, 0);
+            }
 
-            // let noCartProducts = false;
-            // if (cartProducts.length === 0) {
-            //     noCartProducts = true;
-            // }
-    
-            return res.render("individualCart", { user, cart, cartProducts });
+            const productsWithoutStock = [];
+            
+            for (const item of cart.products) {
+                if (item.product) {
+                    const product = item.product;
+                    const quantity = item.quantity;
+                    const pid = item.product._id;
+                    let stock = item.product.stock;
+            
+                    if (quantity > stock) {
+                        productsWithoutStock.push(product);
+                    }
+                }
+            };
+
+            let allProductsWithStock = true;
+            let noStock = false;
+            if (productsWithoutStock.length > 0) {
+                allProductsWithStock = false;
+                noStock = true;
+            };
+
+            return res.render("individualCart", { user, cart, cartProducts, noCartProducts, totalAmount, allProductsWithStock, noStock });
         } catch (error) {
-            winstonLogger.error(error);
+            console.log(error);
         };
     };
 
@@ -169,6 +200,18 @@ class CartController {
         };
     };
 
+    // DELETE que borra un carrito segun su id
+    deleteCartById = async (req, res) => {
+        try {
+            const {cid} = req.params;
+
+            await cartService.deleteCartById(cid);
+        } catch (error) {
+            winstonLogger.error(error);
+        }
+    }
+
+
     // DELETE que borra los productos de un carrito segun su id
     deleteProductsCart = async (req, res) => {
         try {
@@ -199,16 +242,101 @@ class CartController {
         } catch (error) {
             winstonLogger.error(error);
         };
+
+    };
+    
+    payment = async (req, res) => {
+        try {
+            const { cid } = req.params;
+            const cart = await cartService.getCartById(cid);
+    
+            const username = req.session.user.username;
+            const user = await userService.getUserByUsername(username);
+    
+            const lineItems = cart.products.map((item) => {
+                return {
+                    price_data: {
+                        currency: 'ars', 
+                        product_data: {
+                            name: item.product.title,
+                        },
+                        unit_amount: item.product.price * 100,
+                    },
+                    quantity: item.quantity,
+                };
+            });
+
+            // Genero un token único para que no pueda ingresarse al succesPayment, sin haber pagado
+            function generateUniqueToken() {
+                const token = Math.random().toString(36).substr(2) + Date.now().toString(36);
+                return token;
+            }
+            const uniqueToken = generateUniqueToken();
+            cart.token = uniqueToken;
+            await cart.save();
+            
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: lineItems,
+                mode: 'payment',
+                client_reference_id: cid,
+                success_url: `http://localhost:8080/api/carts/${cid}/purchase?token=${cart.token}`,
+                cancel_url: `http://localhost:8080/api/carts/${cid}`,
+            });
+    
+            res.redirect(303, session.url);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
     // POST que crea el ticket
-    addTicket = async (req, res) => {
+    successPayment = async (req, res) => {
         try {
             const { cid } = req.params;
+            const { token } = req.query
+
+            // Verifico que el token generado en la compra sea el mismo que el de la url
             const cart = await cartService.getCartById(cid);
-        
-            const productsWithoutStock = [];
+            if (!cart || cart.token !== token) {
+                return res.render("404NotFound", {});
+            }
+            
+            // Obtengo los datos del usuario que inició sesión
+            const username = req.session.user.username;
+            const user = await userService.getUserByUsername(username);
+
+            const totalAmount = cart.products.reduce((total, item) => {
+                return total + (item.product && item.product.price ? item.product.price : 0) * item.quantity;
+            }, 0);
+
+            const fecha = new Date();
+            const opciones = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+            };
+            const purchase_datetime = fecha.toLocaleString('es-ES', opciones);
+
+            const ticketProducts = cart.products.map(item => ({
+                product: item.product._id,
+                quantity: item.quantity
+            }));
+
+            const ticket = {
+                purchaser: user._id,
+                products: ticketProducts,
+                amount: totalAmount,
+                purchase_datetime: purchase_datetime
+            }
+            
+            await ticketsController.addTicket(ticket);
+
+            // Modifico el stock de los productos comprados
             const productsToUpdate = [];
         
             for (const item of cart.products) {
@@ -218,50 +346,30 @@ class CartController {
                     const pid = item.product._id;
                     let stock = item.product.stock;
             
-                    if (quantity > stock) {
-                        productsWithoutStock.push(product);
-                    } else {
+                    if (quantity < stock) {
                         const updatedStock = stock - quantity;
                         productsToUpdate.push({ pid, stock: updatedStock });
                     }
                 }
             };
-        
-            if (productsWithoutStock.length > 0) {
-                res.send({
-                    status: "error",
-                    message: "Algunos de los productos no tienen suficiente stock",
-                    productsWithoutStock
-                });
-            } else {
-                for (const product of productsToUpdate) {
-                    await productService.updateProductById(product.pid, { stock: product.stock });
-                }
-        
-                const amount = cart.products.reduce((total, item) => {
-                    return total + (item.product && item.product.price ? item.product.price : 0) * item.quantity;
-                }, 0);
-    
-                const code = uuidv4();
 
-                const ticket = {
-                    code: code,
-                    purchase_datetime: Date(),
-                    amount: amount,
-                    purchaser: req.user && req.user.email ? req.user.email : "Usuario desconocido"
-                }
+            for (const product of productsToUpdate) {
+                await productService.updateProductById(product.pid, { stock: product.stock });
+            }
+            
+            // Borro el carrito y creo uno con una id distinta
+            await cartService.deleteCartById(cid);
 
-                await ticketService.addTicket(ticket);
-        
-                await cartService.deleteProductsCart(cid);
-        
-                res.send({
-                    status: "success",
-                    payload: ticket,
-                });
+            const newCart = {
+                owner: user._id,
+                products: []
             };
+    
+            await cartService.addCart(newCart);
+
+            res.render("purchase", {user});        
         } catch (error) {
-            winstonLogger.error(error);
+            console.log(error);
         };
     };
 };

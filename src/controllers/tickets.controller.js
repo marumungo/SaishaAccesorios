@@ -17,14 +17,10 @@ class TicketController {
     };
 
     // POST que añade tickets a la coleccion
-    addTicket = async (req, res) => {
+    addTicket = async (ticket) => {
         try {
-            const ticket = await ticketModel.create(req.body);
-    
-            res.send({
-                status: "success",
-                payload: ticket
-            });
+            const result = await ticketModel.create(ticket);
+            return result;
         } catch (error) {
             winstonLogger.error(error);
         }

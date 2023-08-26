@@ -5,6 +5,7 @@ const collection = "carts";
 
 // Configuro el esquema del carrito
 const cartSchema = new Schema({
+    token: String,
     owner: {
         type: Schema.Types.ObjectId,
         ref: "users",

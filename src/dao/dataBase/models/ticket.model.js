@@ -5,22 +5,21 @@ const collection = "tickets";
 
 // Configuro el esquema del ticket
 const ticketSchema = new Schema({
-    code: {
+    purchaser: {
         type: String,
-        unique: true,
         required: true,
     },
-    purchase_datetime: {
-        type: Date,
-        required: true
+    products: {
+        type: Array,
+        required: true,
     },
     amount: {
         type: Number,
         required: true,
     },
-    purchaser: {
+    purchase_datetime: {
         type: String,
-        required: true,
+        required: true
     }
 });
 
