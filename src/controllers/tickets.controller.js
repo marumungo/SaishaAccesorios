@@ -55,7 +55,7 @@ class TicketController {
                     purchase_datetime: ticket.purchase_datetime
                 });
             }
-            
+
             res.render('tickets', { user, cart, ticketsData, noTickets });
         } catch (error) {
             winstonLogger.error(error);
@@ -101,7 +101,7 @@ class TicketController {
             const result = await ticketModel.create(ticket);
             return result;
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         }
     }
 };

@@ -338,7 +338,7 @@ class UserController {
                 await sendUserDeletedMail(deletedUser.email);
             }
         } catch (error) {
-            console.log(error)
+            winstonLogger.error(error)
         };
     };
 

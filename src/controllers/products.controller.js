@@ -173,7 +173,7 @@ class ProductController {
                 return res.render("addProduct", { user, cart, success });
             }
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         }; 
     };
     

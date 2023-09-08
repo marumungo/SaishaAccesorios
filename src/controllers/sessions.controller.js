@@ -65,7 +65,7 @@ class SessionController {
     
             res.render("register", { missingInfo, existingInfoEmail, existingInfoUsername, userCreated });
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         };
     };
 

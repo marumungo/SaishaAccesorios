@@ -77,7 +77,7 @@ class CartController {
 
             return res.render("individualCart", { user, cart, cartProducts, noCartProducts, totalAmount, allProductsWithStock, noStock });
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         };
     };
 
@@ -281,13 +281,15 @@ class CartController {
                 line_items: lineItems,
                 mode: 'payment',
                 client_reference_id: cid,
-                success_url: `http://localhost:8080/api/carts/${cid}/purchase?token=${cart.token}`,
-                cancel_url: `http://localhost:8080/api/carts/${cid}`,
+                success_url: `https://saishaaccesorios.onrender.com//api/carts/${cid}/purchase?token=${cart.token}`,
+                cancel_url: `https://saishaaccesorios.onrender.com//api/carts/${cid}`,
+                // success_url: `http://localhost:8080/api/carts/${cid}/purchase?token=${cart.token}`,
+                // cancel_url: `http://localhost:8080/api/carts/${cid}`
             });
     
             res.redirect(303, session.url);
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         }
     };
 
@@ -384,7 +386,7 @@ class CartController {
 
             res.render("purchase", {user});        
         } catch (error) {
-            console.log(error);
+            winstonLogger.error(error);
         };
     };
 };
