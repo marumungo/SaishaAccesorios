@@ -281,8 +281,8 @@ class CartController {
                 line_items: lineItems,
                 mode: 'payment',
                 client_reference_id: cid,
-                success_url: `https://saishaaccesorios.onrender.com//api/carts/${cid}/purchase?token=${cart.token}`,
-                cancel_url: `https://saishaaccesorios.onrender.com//api/carts/${cid}`,
+                success_url: `https://saishaaccesorios.onrender.com/api/carts/${cid}/purchase?token=${cart.token}`,
+                cancel_url: `https://saishaaccesorios.onrender.com/api/carts/${cid}`,
                 // success_url: `http://localhost:8080/api/carts/${cid}/purchase?token=${cart.token}`,
                 // cancel_url: `http://localhost:8080/api/carts/${cid}`
             });
