@@ -1,0 +1,32 @@
+<header>
+    {{> header}}
+    {{> productsHeader}}
+</header>
+
+<main>
+    {{#if user}}
+        <div class="mainTickets">
+            <h1>TICKETS</h1>
+
+            {{#if noTickets}}
+                <p class="formInfo">NO HAY TICKETS AÚN!!</p>
+            {{/if}}
+
+            {{#each ticketsData}}
+                <div class="mainTicketsCards">
+                    <div class="card" style="width: 47rem;">
+                        <div class="card-body">
+                            <p class="card-text"><strong>Comprador: </strong>{{purchaser}}</p>
+                            <p class="card-text"><strong>Productos: </strong></p>
+                            {{#each products}}
+                                <p class="card-text">{{quantity}} x {{title}}</p>
+                            {{/each}}
+                            <p class="card-text"><strong>Precio: </strong>${{amount}}</p>
+                            <p class="card-text"><strong>Fecha de compra: </strong>{{purchase_datetime}}</p>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+</main>

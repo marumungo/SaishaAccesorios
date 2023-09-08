@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getProducts, getProductById, addProduct, deleteProducts, updateProductById } = require('../controllers/products.controller');
+const { getProducts, getProductById, addProduct, updateProductById, deleteProductById } = require('../controllers/products.controller');
 const { authorization } = require("../passport-jwt/authorizationJwtRole");
 const { passportCall } = require("../passport-jwt/passportCall");
 const { userService } = require("../service/index.service");
@@ -9,7 +9,6 @@ const router = Router();
 
 // GET en el que se verán todos los productos
 router.get("/", getProducts);
-
 
 // POST que agrega nuevos productos al array
 router.post("/", passportCall("jwt"), authorization("admin", "premium"), addProduct);
@@ -32,7 +31,7 @@ router.put("/:id", passportCall("jwt"), authorization("admin"), updateProductByI
 // router.put("/:id", updateProducts);
 
 // DELETE que elimina un producto según su id
-router.delete("/:id", passportCall("jwt"), authorization("admin", "premium"), deleteProducts);
+router.delete("/:id", passportCall("jwt"), authorization("admin"), deleteProductById);
 // router.delete("/:id", deleteProducts);
 
 module.exports = router;

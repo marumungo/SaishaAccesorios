@@ -7,7 +7,7 @@ const { CustomError } = require('../utils/CustomError/CustomError');
 const { Error } = require('../utils/CustomError/Errors')
 const { generateUserErrorInfo } = require('../utils/CustomError/info');
 const { generateToken } = require("../utils/jwt");
-const { sendMail } = require('../utils/sendMail');
+const { sendResetMail } = require('../utils/sendResetMail');
 const cartController = require("./carts.controller");
 const userController = require("./users.controller");
 
@@ -109,17 +109,8 @@ class SessionController {
 
         // Creo o actualizo el last_connection del user
         const fecha = new Date();
-        const opciones = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-        };
-        const last_connection = fecha.toLocaleString('es-ES', opciones);
 
-        await userService.updateUserById(userDB._id, {last_connection: last_connection})
+        await userService.updateUserById(userDB._id, {last_connection: fecha})
 
         // Creo el token, la sesión y la cookie con los datos del usuario
         const access_token = generateToken({
@@ -218,7 +209,7 @@ class SessionController {
         };    
 
         // Enviar el email de recuperacion al usuario
-        sendMail(email);
+        sendResetMail(email);
         emailSent = true;
 
         // res.status(200).json({status: 'success', message:'Email de recuperación enviado correctamente'});

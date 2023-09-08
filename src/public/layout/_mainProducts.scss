@@ -2,6 +2,7 @@
     display: grid;
     flex-direction: column;
     justify-content: center;
+    justify-items: center;
     margin: 3% 0% 3% 0%;
 
     h1 {
@@ -9,10 +10,26 @@
         font-weight: 200;
     }
 
+    .formInfo {
+        margin: 3% 0% 5% 0%;
+        font-weight: 600;
+        color: $color3;
+        font-weight: 600;
+    }
+
     .mainProductsCards {
         font-family: $tipografia;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: stretch;
+        width: 80%;
+        margin-top: 1%;
 
         .card {
+            margin: 2% 2% 0% 2%;
+
             &:hover {
                 transform: scale(1.05);
             }

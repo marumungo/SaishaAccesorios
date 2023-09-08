@@ -1,0 +1,30 @@
+.mainIndividualTicket {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    margin: 3% 0% 3% 0%;
+
+    h1 {
+        font-family: $tipografia;
+        font-weight: 200;
+    }
+
+    .ticket {
+        font-family: $tipografia;
+        margin: 5% 0% 5% 0%;
+
+        p {
+            margin: 7% 0% 7% 0%;
+        }
+
+    }
+    
+    a {
+        color: $color3 !important;
+    
+        &:hover {
+            color: $color2 !important;
+        }
+    }
+}

@@ -6,12 +6,25 @@
 <main>
     {{#if user}}
         <div class="mainProduct">
+            {{#if noEmail}}
+                <p class="formInfo">PARA REALIZAR UNA COMPRA DEBE REGISTRARSE CON SU EMAIL!!</p>
+            {{/if}}
+
             {{#if product}}
-                <h1>{{product._doc.title}}</h1>
-                <img src="{{product._doc.imageUrl}}" alt="productImage">
-                <p>{{product._doc.description}}</p>
-                <p class="price">${{product._doc.price}}</p>
-                <a href="/api/carts/{{cart._doc._id}}/product/{{product._doc._id}}" class="btn btn-primary btn-add">Agregar al carrito</a>
+                <div>
+                    <h1>{{product._doc.title}}</h1>
+                    <img src="{{product._doc.imageUrl}}" alt="productImage">
+                    <p>{{product._doc.description}}</p>
+                    <p class="price">${{product._doc.price}}</p>
+                    {{#if emailExists}}
+                        <a href="/api/carts/{{cart._doc._id}}/product/{{product._doc._id}}" class="btn btn-primary btn-add">Agregar al carrito</a>
+                    {{/if}}
+                </div>
+
+                {{#if isAdmin}}
+                    <p class="formInfo2">ACCIONES DE ADMIN / PREMIUM</p>
+                    <button class="btn btn-primary delete-product-button" data-productid="{{product._doc._id}}">Eliminar</button>
+                {{/if}}
             {{/if}}
         </div>
     {{/if}}
@@ -51,5 +64,30 @@
                 });
             }
         }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const deleteProductButtons = document.querySelectorAll(".delete-product-button");
+
+        deleteProductButtons.forEach((deleteProductButton) => {
+            deleteProductButton.addEventListener("click", async (event) => {
+                event.preventDefault();
+                
+                const productId = deleteProductButton.getAttribute("data-productid");
+                const url = `/api/products/${productId}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "DELETE"
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `/api/products`;
+                    }, 1);
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        });
     });
 </script>

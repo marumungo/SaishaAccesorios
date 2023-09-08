@@ -20,8 +20,11 @@ main {
     @import "../layout/mainRegister";
     @import "../layout/mainResetPassword";
     @import "../layout/mainDocuments";
-    @import "../layout/mainPayment";
+    @import "../layout/mainPurchase";
     @import "../layout/main404NotFound";
+    @import "../layout/mainNoPermissions";   
+    @import "../layout/mainIndividualTicket";  
+    @import "../layout/mainTickets";  
 }
 
 footer {

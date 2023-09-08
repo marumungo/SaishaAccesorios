@@ -9,7 +9,8 @@ const passportCall = strategy => {
             };
 
             if(!user) {
-                return res.status(401).send({status: 'error', error: info.messages ? info.messages : info.toString()});
+                // return res.status(401).send({status: 'error', error: info.messages ? info.messages : info.toString()});
+                return res.render("noPermissions", {});
             };
 
             req.user = user.user;

@@ -1,0 +1,22 @@
+.mainPurchase {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    margin: 3% 0% 3% 0%;
+    justify-items: center;
+
+    h1 {
+        font-family: $tipografia;
+        font-weight: 200;
+    }
+
+    .formInfo {
+        color: $color3;
+        font-weight: 600;
+        margin-top: 5%;
+    }
+
+    img {
+        width: 60%;
+    }
+}

@@ -27,7 +27,7 @@ const userSchema = new Schema({
         name: String,
         reference: String
     }],
-    last_connection: String
+    last_connection: Date
 });
 
 userSchema.plugin(mongoosePaginate);

@@ -6,6 +6,7 @@ const cartsController = require("./carts.controller");
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
+const { sendUserDeletedMail } = require("../utils/sendUserDeletedMail");
 
 class UserController {
     getUsers = async (req, res) => {
@@ -20,15 +21,20 @@ class UserController {
 
             const cart = await cartsController.getCartByOwner(user._id);
 
+            if (user.role !== "admin") {
+                res.render("noPermissions", {})
+            }
+
             // Obtengo los productos
             let getUsers = await userService.getUsers();
-            // res.status(200).send({
-            //     status: "success",
-            //     payload: getUsers
-            // });
+
             res.render("users", { user, cart, users: getUsers});
         } catch (error) {
-            res.status(500).send({ error: error.message });
+            if (user.role !== "admin") {
+                return res.render("noPermissions", {})
+            };
+            
+            winstonLogger.error(error);
         };
     };
 
@@ -112,6 +118,11 @@ class UserController {
                 // Busco el carrito para poder rederizarlo correctamente
                 const cart = await cartsController.getCartByOwner(user._id);
 
+                let noEmail = false;
+                if (!user.email) {
+                    noEmail = true;
+                }
+
                 let isAdmin = false;
                 let isUserOrPremium
                 if (user.role === "admin") {
@@ -152,7 +163,7 @@ class UserController {
                         }
                     }
 
-                    return res.render("individualUser", {user, cart, isUserOrPremium: true, missingDocuments, missingIdentificacion, missingComprobanteDomicilio, missingComprobanteEstado, allDocuments});
+                    return res.render("individualUser", {user, cart, isUserOrPremium: true, missingDocuments, missingIdentificacion, missingComprobanteDomicilio, missingComprobanteEstado, allDocuments, noEmail});
                 }
             }
         } catch (error) {
@@ -209,7 +220,7 @@ class UserController {
         };
     };
 
-    // PUT que actualiza el rol de un usuario
+    // PUT que actualiza el rol de un usuario si se tienen las documentaciones
     updateRoleUser = async (req, res) => {
         try {
             const { id } = req.params;
@@ -226,7 +237,6 @@ class UserController {
             const cart = await cartsController.getCartByOwner(user._id);
 
             let newRole;
-            let missingDocuments = false;
             if (getUserById.role === "user") {
                 // Verifico que esten todos los documentos antes de cambiar el rol a premium
                 const requiredDocumentNames = ["comprobantedomicilio", "comprobanteestadocuenta", "identificacion"];
@@ -251,20 +261,84 @@ class UserController {
             winstonLogger.error(error);
         };
     };
+
+    // PUT que actualiza el rol de un usuario (para el admin)
+    updateRole = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const getUserById = await userService.getUserById(id);
+
+            // Validación de si existe o no la id
+            if (!getUserById) {
+                return res.render("404NotFound");
+                // return res.status(400).send({ error: "No existe un usuario con esa ID" });
+            }
+
+            const user = getUserById;
+            // Busco el carrito para poder rederizarlo correctamente
+            const cart = await cartsController.getCartByOwner(user._id);
+
+            let newRole;
+            if (getUserById.role === "user") {
+                newRole = "premium";
+            } else if (getUserById.role === "premium") {
+                newRole = "user";
+            } else {
+                newRole = "admin";
+            };
+
+            const updateRole = await userService.updateUserById(id, { role: newRole });
+
+            return res.render("users", {user, cart});
+            } catch (error) {
+            winstonLogger.error(error);
+        };
+    };
     
     // DELETE que elimina un usuario de la base de datos a partir del userModel
-    deleteUsers = async (req, res) => {
+    deleteUserById = async (req, res) => {
         try {
             const { id } = req.params;
 
+            // Obtengo los datos del usuario que inició sesión
+            const username = req.session.user.username;
+            const user = await userService.getUserByUsername(username);
+
+            const cart = await cartsController.getCartByOwner(user._id);
+
             const deleteUserById = await userService.deleteUserById(id);
 
-            res.status(200).send({
-                status: "success",
-                payload: deleteUserById
-            }); 
+            return res.render("users", {user, cart});
         } catch (error) {
             winstonLogger.error(error);
+        };
+    };
+
+    // DELETE que elimina los usuarios que no estuvieron activos por mas de dos dias
+    deleteInactiveUsers = async (req, res) => {
+        try {
+            // Obtengo los datos del usuario que inició sesión
+            const username = req.session.user.username;
+            const user = await userService.getUserByUsername(username);
+
+            const cart = await cartsController.getCartByOwner(user._id);
+
+            // Calcular la fecha límite (2 días atrás)
+            const currentTime = new Date();
+            const inactiveThreshold = new Date(currentTime - 2 * 24 * 60 * 60 * 1000);
+
+            // Encuentra los usuarios inactivos
+            const deletedUsers = await userModel.find({ last_connection: { $lt: inactiveThreshold } });
+            
+            // Eliminar los usuarios inactivos de la base de datos
+            const result = await userModel.deleteMany({ last_connection: { $lt: inactiveThreshold } });
+            
+            // Enviar un correo a cada usuario eliminado
+            for (const deletedUser of deletedUsers) {
+                await sendUserDeletedMail(deletedUser.email);
+            }
+        } catch (error) {
+            console.log(error)
         };
     };
 

@@ -28,6 +28,8 @@ hbs.handlebars.registerHelper('getProperty', (object, propertyName) => {
     return object[propertyName];
 });
 
+hbs.handlebars.registerHelper('eq', (a, b) => a == b)
+
 app.engine("handlebars", hbs.engine);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "handlebars");

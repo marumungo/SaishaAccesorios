@@ -1,0 +1,24 @@
+<header>
+    {{> header}}
+    {{> loginHeader}}
+</header>
+
+<main>
+    <div class="mainIndividualTicket">
+        <h1>RESUMEN DE COMPRA</h1>
+
+        {{#if ticket}}
+            <div class="ticket">
+                <p><strong>Comprador: </strong>{{purchaserName}}</p>
+                <p><strong>Productos: </strong></p>
+                {{#each buyedProducts}}
+                    <p>{{quantity}} x {{title}}</p>
+                {{/each}}
+                <p><strong>Total: </strong>${{ticket._doc.amount}}</p>
+                <p><strong>Fecha de compra: </strong>{{ticket._doc.purchase_datetime}}</p>
+            </div>
+
+            <a href="/api/sessions/login">Ir a iniciar sesión!</a>
+        {{/if}}
+    </div>
+</main>

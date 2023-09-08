@@ -185,20 +185,34 @@ main .mainProduct h1 {
   font-weight: 200;
 }
 
+main .mainProduct .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+  font-size: 100%;
+}
+
+main .mainProduct .formInfo2 {
+  margin-top: 3% !important;
+  font-weight: 200;
+  margin-top: 5%;
+}
+
 main .mainProduct img {
-  margin-top: 10%;
+  margin-top: 3%;
+  width: 50%;
 }
 
 main .mainProduct p {
   font-family: "Montserrat", sans-serif;
   font-size: 130%;
-  margin: 8% 0% 8% 0%;
+  margin: 2% 0% 2% 0%;
 }
 
 main .mainProduct .price {
   color: #7D9D9C;
   font-weight: 600;
-  margin-bottom: 17%;
+  margin-bottom: 2%;
 }
 
 main .mainProduct .btn {
@@ -450,6 +464,7 @@ main .mainProducts {
   display: grid;
   flex-direction: column;
   justify-content: center;
+  justify-items: center;
   margin: 3% 0% 3% 0%;
 }
 
@@ -458,8 +473,26 @@ main .mainProducts h1 {
   font-weight: 200;
 }
 
+main .mainProducts .formInfo {
+  margin: 3% 0% 5% 0%;
+  font-weight: 600;
+  color: #7D9D9C;
+  font-weight: 600;
+}
+
 main .mainProducts .mainProductsCards {
   font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+  width: 80%;
+  margin-top: 1%;
+}
+
+main .mainProducts .mainProductsCards .card {
+  margin: 2% 2% 0% 2%;
 }
 
 main .mainProducts .mainProductsCards .card:hover {
@@ -592,6 +625,26 @@ main .mainUsers {
 main .mainUsers h1 {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
+}
+
+main .mainUsers .btn {
+  margin-top: 5%;
+  font-size: 100%;
+  background-color: #7D9D9C;
+  border: none;
+}
+
+main .mainUsers .btn:focus {
+  box-shadow: none;
+}
+
+main .mainUsers .btn:valid {
+  border-color: black;
+  background-color: #7D9D9C;
+}
+
+main .mainUsers .btn-primary:hover {
+  background-color: #E4DCCF;
 }
 
 main .mainUsers .mainUsersCards {
@@ -871,99 +924,27 @@ main .mainAddDocuments .formInfo {
   margin-top: 5%;
 }
 
-main .mainPayment {
+main .mainPurchase {
   display: grid;
   flex-direction: column;
   justify-content: center;
   margin: 3% 0% 3% 0%;
+  justify-items: center;
 }
 
-main .mainPayment h1 {
+main .mainPurchase h1 {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
 }
 
-main .mainPayment form {
-  width: 100%;
-  height: 100%;
-  margin: 10% 0% 10% 0%;
-  font-family: "Montserrat", sans-serif;
-}
-
-main .mainPayment form .mb-3 {
-  padding: 0% 0% 10% 0%;
-}
-
-main .mainPayment form .mb-3 .form-control {
-  font-size: 85%;
-}
-
-main .mainPayment form .mb-3 .form-control:focus {
-  box-shadow: none;
-  background-color: white;
-}
-
-main .mainPayment form .mb-3 .form-control:valid {
-  border-color: #cccccc;
-  background-color: white;
-}
-
-main .mainPayment form .mb-3 .form-select {
-  font-size: 85%;
-}
-
-main .mainPayment form .mb-3 .form-select:focus {
-  box-shadow: none;
-  background-color: white;
-}
-
-main .mainPayment form .mb-3 .form-select:valid {
-  border-color: #cccccc;
-  background-color: white;
-}
-
-main .mainPayment form .btn {
-  font-size: 100%;
-  background-color: #7D9D9C;
-  border: none;
-}
-
-main .mainPayment form .btn:focus {
-  box-shadow: none;
-}
-
-main .mainPayment form .btn:valid {
-  border-color: black;
-  background-color: #7D9D9C;
-}
-
-main .mainPayment form .btn-primary:hover {
-  background-color: #E4DCCF;
-}
-
-main .mainPayment p {
-  font-family: "Montserrat", sans-serif;
-  font-size: 90%;
-}
-
-main .mainPayment a {
-  color: #7D9D9C;
-}
-
-main .mainPayment a:hover {
-  color: #E4DCCF;
-}
-
-main .mainPayment .formInfo {
+main .mainPurchase .formInfo {
   color: #7D9D9C;
   font-weight: 600;
   margin-top: 5%;
 }
 
-main .mainPayment .formInfo1 {
-  color: #7D9D9C;
-  font-weight: 600;
-  margin-top: 1%;
+main .mainPurchase img {
+  width: 60%;
 }
 
 main .main404NotFound {
@@ -992,6 +973,102 @@ main .main404NotFound a:hover {
 main .main404NotFound img {
   margin-top: 3%;
   width: 50%;
+}
+
+main .mainNoPermissions {
+  display: grid;
+  flex-direction: column;
+  justify-items: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainNoPermissions h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  margin-bottom: 3%;
+  color: #7D9D9C;
+}
+
+main .mainNoPermissions a {
+  font-family: "Montserrat", sans-serif;
+  color: #7D9D9C;
+}
+
+main .mainNoPermissions a:hover {
+  color: #E4DCCF;
+}
+
+main .mainNoPermissions img {
+  margin-top: 3%;
+  width: 40%;
+}
+
+main .mainIndividualTicket {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainIndividualTicket h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainIndividualTicket .ticket {
+  font-family: "Montserrat", sans-serif;
+  margin: 5% 0% 5% 0%;
+}
+
+main .mainIndividualTicket .ticket p {
+  margin: 7% 0% 7% 0%;
+}
+
+main .mainIndividualTicket a {
+  color: #7D9D9C !important;
+}
+
+main .mainIndividualTicket a:hover {
+  color: #E4DCCF !important;
+}
+
+main .mainTickets {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3% 0% 3% 0%;
+}
+
+main .mainTickets h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+}
+
+main .mainTickets .formInfo {
+  color: #7D9D9C;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+main .mainTickets .mainTicketsCards {
+  font-family: "Montserrat", sans-serif;
+}
+
+main .mainTickets .mainTicketsCards .card {
+  width: 100%;
+  margin: 10% 0% 0% 0%;
+}
+
+main .mainTickets .mainTicketsCards .card .card-body h5 {
+  font-size: 120%;
+  margin-top: 3%;
+  color: #7D9D9C;
+  font-weight: 600;
+}
+
+main .mainTickets .mainTicketsCards .card .card-body p {
+  margin: 10% 0% 10% 0%;
 }
 
 footer p {

@@ -3,6 +3,7 @@ const { cartModel } = require("../dao/dataBase/models/cart.model");
 const { cartService, productService, ticketService, userService } = require("../service/index.service");
 const { winstonLogger } = require('../config/loggers');
 const ticketsController = require('./tickets.controller');
+const { sendPurchaseMail } = require('../utils/sendPurchaseMail');
 
 require("dotenv").config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -307,10 +308,12 @@ class CartController {
             const username = req.session.user.username;
             const user = await userService.getUserByUsername(username);
 
+            // Calculo el monto total de los productos
             const totalAmount = cart.products.reduce((total, item) => {
                 return total + (item.product && item.product.price ? item.product.price : 0) * item.quantity;
             }, 0);
 
+            // Guardo la fecha de realización de la compra
             const fecha = new Date();
             const opciones = {
             year: 'numeric',
@@ -322,16 +325,25 @@ class CartController {
             };
             const purchase_datetime = fecha.toLocaleString('es-ES', opciones);
 
+            // Creo un codigo único
+            function generateUniqueCode() {
+                const code = Math.random().toString(36).substr(2) + Date.now().toString(36);
+                return code;
+            }
+            const uniqueCode = generateUniqueCode()
+            
+            // Añado el ticket a la base de datos con sus productos, comprador y código correspondientes
             const ticketProducts = cart.products.map(item => ({
                 product: item.product._id,
                 quantity: item.quantity
             }));
-
+            
             const ticket = {
                 purchaser: user._id,
                 products: ticketProducts,
                 amount: totalAmount,
-                purchase_datetime: purchase_datetime
+                purchase_datetime: purchase_datetime,
+                code: uniqueCode
             }
             
             await ticketsController.addTicket(ticket);
@@ -366,6 +378,9 @@ class CartController {
             };
     
             await cartService.addCart(newCart);
+
+            // Envio un email con un link hacia el resumen de la compra
+            sendPurchaseMail(uniqueCode, user.email);
 
             res.render("purchase", {user});        
         } catch (error) {

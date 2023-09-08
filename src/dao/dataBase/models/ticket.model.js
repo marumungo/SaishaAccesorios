@@ -7,19 +7,23 @@ const collection = "tickets";
 const ticketSchema = new Schema({
     purchaser: {
         type: String,
-        required: true,
+        required: true
     },
     products: {
         type: Array,
-        required: true,
+        required: true
     },
     amount: {
         type: Number,
-        required: true,
+        required: true
     },
     purchase_datetime: {
         type: String,
         required: true
+    },
+    code: {
+        type: String,
+        unique: true
     }
 });
 

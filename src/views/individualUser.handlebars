@@ -29,12 +29,20 @@
 
                 <p>Si desea crear un producto. <a href="/api/products/addProduct">Ingrese aquí</a></p>
                 <p>Si desea ver todos los usuarios. <a href="/api/users">Ingrese aquí</a></p>
+                <p>Si desea ver todos los tickets. <a href="/api/tickets">Ingrese aquí</a></p>
             </div>
         {{/if}}
 
         {{#if isUserOrPremium}}
             <div class="mainUser">
-                <h1>ACCIONES DE {{user._doc.role}}</h1>
+                {{#if (eq user._doc.role "user")}}
+                    <h1>ACCIONES DE USER</h1>
+                {{/if}}
+
+                {{#if (eq user._doc.role "premium")}}
+                    <h1>ACCIONES DE PREMIUM</h1>
+                    <p>Si desea crear un producto. <a href="/api/products/addProduct">Ingrese aquí</a></p>
+                {{/if}}
 
                 {{#if missingDocuments}}
                     <div>

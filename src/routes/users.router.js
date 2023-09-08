@@ -1,9 +1,7 @@
 const { Router } = require("express");
-const { getUsers, createUsers, deleteUsers, getUsersPaginate, updateRoleUser, getUserById, updateUserById, uploadDocuments } = require("../controllers/users.controller");
+const { getUsers, createUsers, updateRoleUser, getUserById, updateUserById, uploadDocuments, deleteInactiveUsers, deleteUserById, updateRole } = require("../controllers/users.controller");
 const { authorization } = require("../passport-jwt/authorizationJwtRole");
 const { passportCall } = require("../passport-jwt/passportCall");
-const { userService } = require("../service/index.service");
-const cartsController = require("../controllers/carts.controller");
 
 // Declaro y llamo al Router
 const router = Router();
@@ -20,11 +18,18 @@ router.post("/", createUsers);
 // PUT que actualiza un usuario en la base de datos a partir del userModel
 router.put("/:id", updateUserById);
 
-// PUT que actualiza el rol de un usuario
+// PUT que actualiza el rol de un usuario si se tienen las documentaciones
 router.put("/premium/:id", updateRoleUser);
 
+// PUT que actualiza el rol de un usuario (para el admin)
+router.put("/updaterole/:id", passportCall("jwt"), authorization("admin"), updateRole);
+
+// DELETE que elimina los usuarios que no estuvieron activos por mas de dos dias
+router.delete("/deleteinactive", deleteInactiveUsers);
+
 // DELETE que elimina un usuario de la base de datos a partir del userModel
-router.delete("/:id", deleteUsers);
+router.delete("/:id", deleteUserById);
+
 
 // POST que añade documentos
 router.post("/:uid/documents", uploadDocuments);

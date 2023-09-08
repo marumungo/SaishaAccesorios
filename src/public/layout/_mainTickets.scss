@@ -1,4 +1,4 @@
-.mainUsers {
+.mainTickets {
     display: grid;
     flex-direction: column;
     justify-content: center;
@@ -9,29 +9,13 @@
         font-weight: 200;
     }
 
-    .btn {
+    .formInfo {
+        color: $color3;
+        font-weight: 600;
         margin-top: 5%;
-        font-size: 100%;
-        background-color: $color3;
-        border: none;
-        
-        &:focus {
-            box-shadow: none;
-        }
-
-        &:valid {
-            border-color: black;
-            background-color: $color3;
-        }
     }
 
-    .btn-primary {
-        &:hover {
-            background-color: $color2;
-        }
-    }
-
-    .mainUsersCards {
+    .mainTicketsCards {
         font-family: $tipografia;
 
         .card {
@@ -47,15 +31,9 @@
                 }
     
                 p {
-                    margin: 10% 0% 5% 0%;
+                    margin: 10% 0% 10% 0%;
                 }
             }
         }
-    }
-
-    .formInfo {
-        color: $color3;
-        font-weight: 600;
-        margin-top: 5%;
     }
 }

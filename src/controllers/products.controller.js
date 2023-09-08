@@ -6,6 +6,7 @@ const { generateProductErrorInfo } = require("../utils/CustomError/info");
 const { winstonLogger } = require("../config/loggers");
 const { default: mongoose } = require("mongoose");
 const cartsController = require("./carts.controller");
+const { sendProductDeletedMail } = require("../utils/sendProductDeletedMail");
 const Swal = require('sweetalert2').default;
 class ProductController {
     // GET en el que se verán todos los productos
@@ -17,18 +18,19 @@ class ProductController {
             }
 
             const username = req.session.user.username;
-
             const user = await userService.getUserByUsername(username);
-            const oid = user._id
-            const cart = await cartsController.getCartByOwner(oid);
+
+            const cart = await cartsController.getCartByOwner(user._id);
+
+            let noEmail = false;
+            if (!user.email) {
+                noEmail = true;
+            }
 
             // Obtengo los productos
             let getProducts = await productService.getProducts();
-            // res.status(200).send({
-            //     status: "success",
-            //     payload: getProducts
-            // });
-            res.render("products", { user: user, products: getProducts, cart: cart });
+
+            res.render("products", { user: user, products: getProducts, cart: cart, noEmail });
         } catch (error) {
             res.status(500).send({ error: error.message });
         };
@@ -43,7 +45,8 @@ class ProductController {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 return res.render("404NotFound");
             }
-
+            
+            // Obtengo los datos del usuario que inició sesión, si no hay redirecciono al login
             if (!req.session.user) {
                 return res.redirect("/");
             }
@@ -54,19 +57,26 @@ class ProductController {
 
             const cart = await cartsController.getCartByOwner(user._id);
 
+            let emailExists = false;
+            let noEmail = true;
+            if (user.email) {
+                emailExists = true;
+                noEmail = false;
+            }
+
+            let isAdmin = false;
+            if (user.role === "admin") {
+                isAdmin = true;
+            };
+
             // Obtengo el producto segun la id
             const getProductById = await productService.getProductById(id);
 
             // Validación de si existe o no la id
             if (!getProductById) {
-                // return res.status(400).send({error: "No existe un producto con esa ID"});
                 return res.render("404NotFound");
             } else {
-                return res.render("individualProduct", { user, cart, product: getProductById});
-                // res.status(200).send({
-                //     status: "success",
-                //     payload: getProductById
-                // });
+                return res.render("individualProduct", { user, cart, product: getProductById, isAdmin, emailExists, noEmail});
             }
         } catch (error) {
             res.status(400).send({error: error.message});
@@ -83,7 +93,6 @@ class ProductController {
 
             // Validación de si existe o no el code
             if (!getProductByCode) {
-                // return res.status(400).send({error: "No existe un producto con ese code"});
                 return res.render("404NotFound");
             }
         } catch (error) {
@@ -185,21 +194,27 @@ class ProductController {
     };
     
     // DELETE que elimina un producto según su id
-    deleteProducts = async (req, res) => {
+    deleteProductById = async (req, res) => {
         const { id } = req.params;
 
-        const getProductById = await productService.getProductById(id);
+        // Obtengo los datos del usuario que inició sesión
+        const username = req.session.user.username;
+        const user = await userService.getUserByUsername(username);
 
-        if (getProductById.owner !== req.session.user.email && req.session.user.role !== "admin") {
-            return res.status(400).send({error: "Debes ser admin o creador del producto para poder eliminarlo"});
-        };
+        const cart = await cartsController.getCartByOwner(user._id);
+
+        // Verificar si el producto a eliminar tiene como owner un usuario premium
+        const product = await productService.getProductById(id);
+
+        const owner = await userService.getUserByEmail(product.owner);
+
+        await productService.deleteProductById(id); 
         
-        const deleteProductById = await productService.deleteProductById(id);
-        
-        res.status(200).send({
-            status: "success",
-            payload: deleteProductById
-        });    
+        if (owner.role === "premium") {
+            await sendProductDeletedMail(owner.email);
+        }
+
+        return res.render("products", {user, cart});
     };
 };
 

@@ -78,6 +78,8 @@ const initPassportGithub = () => {
         try {
             let user = await userModel.findOne({username: profile.username});
 
+            let username = profile.username;
+
             if (!user) {
                 const firstAndLastName = profile.displayName.split(" ");
                 const name = firstAndLastName[0];

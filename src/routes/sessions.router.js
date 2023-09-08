@@ -3,7 +3,7 @@ const {auth} = require("../middlewares/authentication.middleware");
 const passport = require("passport");
 const { passportCall } = require("../passport-jwt/passportCall");
 const { authorization } = require("../passport-jwt/authorizationJwtRole");
-const { registerSession, loginSession, loginCookie, registerPassport, loginPassport, registerPassportEscape, loginPassportEscape, githubCallback, privateAdmin, logoutSession, forgotPassword, resetPassword, sessionCounter, roleValidator } = require("../controllers/sessions.controller");
+const { registerSession, loginCookie, githubCallback, logoutSession, forgotPassword, resetPassword, roleValidator } = require("../controllers/sessions.controller");
 const { authToken } = require("../utils/jwt");
 
 const router = Router();

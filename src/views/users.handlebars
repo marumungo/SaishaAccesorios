@@ -8,6 +8,7 @@
         <div class="mainUsers">
             <h1>USUARIOS</h1>
 
+            <button id="deleteInactiveButton" class="btn btn-primary delete-button">Eliminar inactivos</button>
             {{#each users}}
                 <div class="mainUsersCards">
                     <div class="card" style="width: 47rem;">
@@ -19,6 +20,14 @@
                             <p class="card-text"><strong>Género: </strong>{{this._doc.gender}}</p>
                             <p class="card-text"><strong>Rol: </strong>{{this._doc.role}}</p>
                             <p class="card-text"><strong>Última vez conectado: </strong>{{this._doc.last_connection}}</p>
+                            {{#if (eq this._doc.role "user")}}
+                                <button class="btn btn-primary rolUserButton" data-userid="{{this._doc._id}}">Cambiar rol a premium</button>
+                            {{/if}}
+                            {{#if (eq this._doc.role "premium")}}
+                                <button class="btn btn-primary rolUserButton" data-userid="{{this._doc._id}}">Cambiar rol a user</button>
+                            {{/if}}
+                            
+                            <button class="btn btn-primary delete-button deleteUserButton" data-userid="{{this._doc._id}}">Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -26,3 +35,72 @@
         </div>
     {{/if}}
 </main>
+
+<script>
+    document.getElementById("deleteInactiveButton").addEventListener("click", async () => {
+        try {
+            const response = await fetch("/api/users/deleteinactive", {
+                method: "DELETE",
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                location.reload();
+            } else {
+                console.error(data.error);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const deleteUserButtons = document.querySelectorAll(".deleteUserButton");
+
+        deleteUserButtons.forEach((button) => {
+            button.addEventListener("click", async (event) => {
+                event.preventDefault();
+                
+                const userId = button.getAttribute("data-userid");
+                const url = `/api/users/${userId}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "DELETE"
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `/api/users`;
+                    }, 1);
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const rolUserButtons = document.querySelectorAll(".rolUserButton");
+
+        rolUserButtons.forEach((button) => {
+            button.addEventListener("click", async (event) => {
+                event.preventDefault();
+                
+                const userId = button.getAttribute("data-userid");
+                const url = `/api/users/updaterole/${userId}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "PUT"
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `/api/users`;
+                    }, 1);
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
